@@ -1,7 +1,11 @@
 <%@ page import="com.koreait.board.BoardVO" %>
+<%@ page import="com.koreait.board.BoardDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     BoardVO vo = (BoardVO) request.getAttribute("detail");
+    String strIboard = request.getParameter("iboard");
+    int prevIboard = (int)request.getAttribute("prevIdx");
+    int nextIboard = (int)request.getAttribute("nextIdx");
 %>
 
 <!DOCTYPE html>
@@ -12,6 +16,16 @@
     <title></title>
 </head>
 <body>
+    <div>
+        <% if(prevIboard != 0){%>
+            <a href="/detail?iboard=<%=prevIboard%>"><input type="button" value="이전글"></a>
+        <% }%>
+
+        <% if(nextIboard != 0){%>
+            <a href="/detail?iboard=<%=nextIboard%>"><input type="button" value="다음글"></a>
+        <% }%>
+    </div>
+    <br>
     <div>
         <a href="/del?iboard=<%=vo.getIboard() %>"><input type="button" id="delBtn" value="삭제"></a>
         <a href="/mod?iboard=<%=vo.getIboard() %>"><input type="button" value="수정"></a>
