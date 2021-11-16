@@ -79,6 +79,49 @@ public class BoardDAO {
         }
         return vo;
     }
+    
+    
+    public static int selPrevIboard(BoardVO param){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT iboard FROM t_board WHERE iboard > ? ORDER BY iboard LIMIT 1";
+        try {
+            con= DbUtils.getCon();
+            ps= con.prepareStatement(sql);
+            ps.setInt(1,param.getIboard());
+            rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("iboard");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DbUtils.close(con,ps,rs);
+        }
+        return 0;
+    }
+
+    public static int selNextIboard(BoardVO param){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT iboard FROM t_board WHERE iboard < ? ORDER BY iboard DESC LIMIT 1";
+        try {
+            con= DbUtils.getCon();
+            ps= con.prepareStatement(sql);
+            ps.setInt(1,param.getIboard());
+            rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt("iboard");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DbUtils.close(con,ps,rs);
+        }
+        return 0;
+    }
 
     public static int delboard(int iboard){
         Connection con = null;
